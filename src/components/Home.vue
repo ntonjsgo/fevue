@@ -33,32 +33,6 @@
             </form>
         </div>
         <hr>
-        <!--<table class="table">
-            <thead class="table-success">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Titolo</th>
-                <th scope="col">Autore</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="post in list">
-                <th scope="row"><a :href="'/post/' + post.id">{{post.id}}</a></th>
-                <td>{{post.title}}</td>
-                <td>{{post.body}}</td>
-
-                 <td>@{{contact.email}}</td>
-                <td>@{{contact.phone}}</td>
-                <td class="text-center">
-                    <a @click="showPost(post)" class="fa fa-edit fa-lg" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
-                    <a @click="deletePost(post.id)" class="fa fa-times fa-lg"  style="color: red; cursor: pointer"></a>
-                </td>
-            </tr>
-            </tbody>
-        </table> ---->
 
 
         <div class="container d-flex flex-wrap " >
@@ -66,14 +40,14 @@
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between">
                         <h5 class="card-title w-75">{{post.title}}</h5>
-                        <div v-if="current_user_id == post.user_id" class="w-25 d-flex justify-content-evenly">
+                        <div v-if="current_user_id == post.customer.id" class="w-25 d-flex justify-content-evenly">
                             <a @click="showPost(post)" class="fa fa-edit fa-lg" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
                             <a @click="deletePost(post.id)" class="fa fa-times fa-lg"  style="color: red; cursor: pointer"></a>
                         </div>
                     </div>
 
                     <p class="card-text">{{post.body}}</p>
-                    <small class="fw-bold fst-italic mt-auto mb-1">{{post.name}}</small>
+                    <small class="fw-bold fst-italic mt-auto mb-1">{{post.customer.name}}</small>
                     <a :href="'/post/' + post.id" class="btn btn-primary">Go to the article</a>
                 </div>
 
@@ -81,15 +55,7 @@
         </div>
         <div>
 
-            <div class="pagination pagination-lg float-right justify-content-center mt-3 mb-5">
-                <button class="page-link" @click="fetchPaginateData(pagination.prev_page_url)" :disabled="!pagination.prev_page_url">
-                    &laquo;
-                </button>
-                <span class="page-link" >{{ pagination.current_page }}  of  {{ pagination.last_page }}</span>
-                <button class="page-link" @click="fetchPaginateData(pagination.next_page_url)" :disabled="!pagination.next_page_url">
-                    &raquo;
-                </button>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -120,6 +86,7 @@ export default {
                 id:'',
 
             },
+            baseUrl : "http://localhost:8080",
             url: '/api/posts',
             pagination:[]
         }
@@ -129,28 +96,12 @@ export default {
     },
 
     methods: {
-        fetchPaginateData:function(url){
-            this.url = url
-            this.fetchPostsList();
-        },
-
-        makePagination:function(data){
-            let pagination = {
-                current_page: data.current_page,
-                last_page: data.last_page,
-                next_page_url: data.next_page_url,
-                prev_page_url: data.prev_page_url
-            }
-            this.pagination = pagination
-        },
         fetchPostsList:function(){
             console.log('Fetching contacts...');
-            let $this = this
-            axios.get(this.url)
+            axios.get(this.baseUrl + this.url)
                 .then((response) => {
                     console.log(response.data);
-                    this.list = response.data.data;
-                    $this.makePagination(response.data);
+                    this.list = response.data;
 
                 }).catch((error) => {
                 console.log(error);
