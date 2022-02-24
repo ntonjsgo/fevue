@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --watch",
-    "build": "vue-cli-service build",
-    "watch": "vue-cli-service build --watch"
+    "serveDev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.2",

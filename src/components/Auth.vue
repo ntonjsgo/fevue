@@ -31,24 +31,22 @@
 export default {
     data(){
         return{
-
+            url: "http://localhost:8080"
         }
     },
     methods:{
         fetchUser: function (){
             let name = document.getElementById('name-input').value;
-            axios.get(`/api/users/name/${name}`)
+            axios.get(`${this.url}/api/customers/name/${name}`)
                 .then((response)=>{
-                    const names = response.data;
-                    console.log(response.data);
-                    if (names.status === 'error'){
+                    if(response.data.length === 0) {
                         alert("L'utente non esiste :'( ");
-                    }
-                    else{
-                    localStorage.setItem('username', names.name);
-                    localStorage.setItem('userid', names.id);
-                    localStorage.setItem('useremail', names.email);
-                    window.location.href = '/home';
+                    } else {
+                        console.log(response.data);
+                    // localStorage.setItem('username', names.name);
+                    // localStorage.setItem('userid', names.id);
+                    // localStorage.setItem('useremail', names.email);
+                    //window.location.href = '/home';
                     }
                 })
 

@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import bootstrap from 'bootstrap';
 
+window.axios = require('axios');
+
 Vue.config.productionTip = false
 
 new Vue({

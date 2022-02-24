@@ -35,21 +35,20 @@ export default {
             url : "http://localhost:8080"
         }
     },
-    methods:{
+    methods: {
         fetchUser: function (){
             let name = document.getElementById('name-input').value;
             axios.get(`${this.url}/api/customers/name/${name}`)
                 .then((response)=>{
-                    const names = response.data;
-                    console.log(response.data);
-                    if (names.status === 'error'){
+                    if (response.data.length === 0) {
                         alert("L'utente non esiste :'( ");
                     }
                     else{
-                    localStorage.setItem('username', names.name);
-                    localStorage.setItem('userid', names.id);
-                    localStorage.setItem('useremail', names.email);
-                    window.location.href = '/home';
+                        let loggedUser = response.data[0];
+                     localStorage.setItem('username', loggedUser.name);
+                     localStorage.setItem('userid', loggedUser.id);
+                     localStorage.setItem('useremail', loggedUser.email);
+                     window.location.href = '/home';
                     }
                 })
 
@@ -57,9 +56,7 @@ export default {
 
         }
     },
-    mounted:function(){
-        //this.fetchUser();
-    }
+    mounted: function() {}
 }
 </script>
 
