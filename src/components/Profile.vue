@@ -36,6 +36,8 @@
 export default{
     data(){
         return {
+            
+    lastUrlString: window.location.href.split("/"),
             baseUrl: "http://localhost:8080",
             current_user_id: localStorage.getItem("userid"),
             posts: [],
@@ -46,7 +48,7 @@ export default{
     },
     methods:{
         getPostsOfUser: function(){
-            axios.get(this.baseUrl + "/api/posts/ofCustomer/" + this.current_user_id)
+            axios.get(this.baseUrl + "/api/posts/ofCustomer/" + this.lastUrlString[this.lastUrlString.length - 1])
                 .then((response) => {
                     this.posts = response.data;
                 }).catch((error) => {
@@ -54,7 +56,7 @@ export default{
             });
         },
         getProfile: function() {
-            axios.get(this.baseUrl + "/api/customers/" + this.current_user_id).then((response) => {
+            axios.get(this.baseUrl + "/api/customers/" + this.lastUrlString[this.lastUrlString.length - 1]).then((response) => {
                 console.log(response);
                 this.username = response.data.name;
                 this.email = response.data.email;

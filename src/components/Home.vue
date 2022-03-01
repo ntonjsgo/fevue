@@ -55,7 +55,7 @@
                             </div>
 
                             <p class="card-text">{{ post.body }}</p>
-                            <small class="fw-bold fst-italic mt-auto mb-1">{{
+                            <small @click="goToUserProfile(post.customer.id)" style="cursor: pointer;" class="fw-bold fst-italic mt-auto mb-1">{{
                 post.customer.name
               }}</small>
                             <a :href="'/post/' + post.id" class="btn btn-primary">Go to the article</a>
@@ -91,7 +91,7 @@
         mounted: function () {
             this.fetchPostsList();
         },
-
+        
         methods: {
             fetchPostsList: function () {
                 console.log("Fetching contacts...");
@@ -105,7 +105,9 @@
                         console.log(error);
                     });
             },
-
+goToUserProfile: function(author_id) {
+        window.location.href = '/profile/' + author_id;
+    },
             createPost: function () {
                 let self = this;
                 self.edit = false;
