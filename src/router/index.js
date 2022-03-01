@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Auth from '../components/Auth.vue'
 import Home from '../components/Home.vue'
-import Post from '../components/Post.Vue'
+import Post from '../components/Post.vue'
+import Profile from '../components/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/post/:id',
     name: 'Post',
     component: Post
+  },
+  {
+    path: '/profile/:user_id',
+    name: 'Profile',
+    component: Profile
   }
 ]
 
